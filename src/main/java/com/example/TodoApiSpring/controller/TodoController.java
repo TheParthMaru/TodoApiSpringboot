@@ -15,6 +15,8 @@ import java.util.Map;
  */
 
 @RestController
+// Used for API version
+// Common route path can be added to @RequestMapping, which is kind of a parent URL
 @RequestMapping("/api/v1/todos")
 public class TodoController {
 
