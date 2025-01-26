@@ -15,6 +15,7 @@ import java.util.Map;
  */
 
 @RestController
+@RequestMapping("/api/v1/todos")
 public class TodoController {
 
     private static List<Todo> todoList;
@@ -29,7 +30,7 @@ public class TodoController {
      * The ArrayList is being serialized and gets automatically converted to JSON response.
      */
 
-    @GetMapping("/todos")
+    @GetMapping
     public List<Todo> getTodos() {
         return todoList;
     }
@@ -43,7 +44,7 @@ public class TodoController {
     // Ways to provide response status
     // 1. @ResponseStatus(HttpStatus.CREATED) below @PostMapping
     // 2. Using ResponseEntity class manually sending response to the client
-    @PostMapping("/todos")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Todo createTodo(@RequestBody Todo newTodo) {
          todoList.add(newTodo);
@@ -60,7 +61,7 @@ public class TodoController {
     /**
      * Get a Todo based on ID
      */
-    @GetMapping("/todos/{todoId}")
+    @GetMapping("/{todoId}")
     public ResponseEntity<?> getTodoById(@PathVariable Integer todoId) {
         for(Todo todo : todoList) {
             if(todo.getId() == todoId) {
