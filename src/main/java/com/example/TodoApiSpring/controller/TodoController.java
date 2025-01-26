@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller's task is to take the request and return its response
@@ -54,4 +56,23 @@ public class TodoController {
 //        todoList.add(newTodo);
 //        return ResponseEntity.status(HttpStatus.CREATED).body(newTodo);
 //    }
+
+    /**
+     * Get a Todo based on ID
+     */
+    @GetMapping("/todos/{todoId}")
+    public ResponseEntity<?> getTodoById(@PathVariable Integer todoId) {
+        for(Todo todo : todoList) {
+            if(todo.getId() == todoId) {
+                return ResponseEntity.ok(todo);
+            }
+        }
+
+//        return ResponseEntity.notFound().build();
+
+        // Along with 404 status code, try to send a json {"message": "Todo not found"};
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("message", "Todo not found");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
 }
